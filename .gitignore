@@ -1,0 +1,32 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Build artifacts
+build/
+dist/*
+!dist/.gitignore
+*.egg-info/
+.eggs/
+
+# Test and coverage outputs
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+.python-version
+
+# IDE and OS files
+.idea/
+.vscode/
+.DS_Store
+
+# Local secrets
+ppio_key
+
+# Optional uv cache dir
+.uv-cache/
