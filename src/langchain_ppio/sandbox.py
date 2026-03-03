@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Protocol
 
 from deepagents.backends.protocol import (
     ExecuteResponse,
@@ -10,15 +10,30 @@ from deepagents.backends.protocol import (
     FileUploadResponse,
 )
 from deepagents.backends.sandbox import BaseSandbox
-from ppio_sandbox.core import (
+from e2b import (
     AuthenticationException,
     CommandExitException,
     InvalidArgumentException,
     NotFoundException,
-    Sandbox,
     SandboxException,
     TimeoutException,
 )
+
+
+class _CommandsProtocol(Protocol):
+    def run(self, cmd: str, timeout: float | None = ...) -> Any: ...
+
+
+class _FilesProtocol(Protocol):
+    def read(self, path: str, format: str = ...) -> Any: ...
+
+    def write(self, path: str, data: bytes | str) -> Any: ...
+
+
+class E2BCompatibleSandbox(Protocol):
+    sandbox_id: str
+    commands: _CommandsProtocol
+    files: _FilesProtocol
 
 
 def _normalize_bytes(content: Any) -> bytes:
@@ -53,10 +68,10 @@ def _join_output(stdout: str | None, stderr: str | None) -> str:
 
 
 class PPIOSandbox(BaseSandbox):
-    """PPIO sandbox implementation conforming to SandboxBackendProtocol."""
+    """PPIO sandbox adapter using the E2B-compatible SDK surface."""
 
-    def __init__(self, *, sandbox: Sandbox, timeout: int = 30 * 60) -> None:
-        """Create a backend wrapping an existing PPIO sandbox."""
+    def __init__(self, *, sandbox: E2BCompatibleSandbox, timeout: int = 30 * 60) -> None:
+        """Create a backend wrapping an existing E2B-compatible sandbox."""
         self._sandbox = sandbox
         self._timeout = timeout
 

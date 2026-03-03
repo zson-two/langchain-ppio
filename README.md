@@ -1,6 +1,6 @@
 # langchain-ppio
 
-`langchain-ppio` provides a PPIO sandbox backend for [Deep Agents](https://docs.langchain.com/oss/python/deepagents/sandboxes).
+`langchain-ppio` provides a PPIO sandbox backend for [Deep Agents](https://docs.langchain.com/oss/python/deepagents/sandboxes), implemented with the [PPIO E2B-compatible API](https://ppio.com/docs/sandbox/e2b-compatible).
 
 ## Install
 
@@ -14,12 +14,13 @@ uv add langchain-ppio
 import os
 from pathlib import Path
 
-from ppio_sandbox.core import Sandbox
+from e2b import Sandbox
 from langchain_ppio import PPIOSandbox
 
-# Optional: load API key from local file
-if not os.getenv("PPIO_API_KEY") and Path("ppio_key").exists():
-    os.environ["PPIO_API_KEY"] = Path("ppio_key").read_text().strip()
+# Required for PPIO E2B compatibility
+os.environ.setdefault("E2B_DOMAIN", "sandbox.ppio.cn")
+if not os.getenv("E2B_API_KEY") and Path("ppio_key").exists():
+    os.environ["E2B_API_KEY"] = Path("ppio_key").read_text().strip()
 
 sandbox = Sandbox.create()
 backend = PPIOSandbox(sandbox=sandbox)
@@ -36,7 +37,8 @@ sandbox.kill()
 uv run langchain-ppio-smoke
 ```
 
-The smoke command will read `PPIO_API_KEY` from environment variables first, then fallback to a local `ppio_key` file.
+The smoke command reads `E2B_API_KEY` first, then falls back to `ppio_key`.  
+`E2B_DOMAIN` defaults to `sandbox.ppio.cn`.
 
 ## Build & Publish With uv
 

@@ -7,7 +7,7 @@ license = { text = "MIT" }
 requires-python = ">=3.11,<4.0"
 dependencies = [
     "deepagents>=0.4.4",
-    "ppio-sandbox>=1.0.4",
+    "e2b-code-interpreter>=2.4.1",
 ]
 classifiers = [
     "Intended Audience :: Developers",

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from unittest.mock import Mock
 
-from ppio_sandbox.core import (
+from e2b import (
     CommandExitException,
     CommandResult,
     InvalidArgumentException,
