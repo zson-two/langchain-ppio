@@ -21,7 +21,13 @@ from e2b import (
 
 
 class _CommandsProtocol(Protocol):
-    def run(self, cmd: str, timeout: float | None = ...) -> Any: ...
+    def run(
+        self,
+        cmd: str,
+        *args: Any,
+        timeout: float | None = ...,
+        **kwargs: Any,
+    ) -> Any: ...
 
 
 class _FilesProtocol(Protocol):
@@ -31,9 +37,14 @@ class _FilesProtocol(Protocol):
 
 
 class E2BCompatibleSandbox(Protocol):
-    sandbox_id: str
-    commands: _CommandsProtocol
-    files: _FilesProtocol
+    @property
+    def sandbox_id(self) -> str: ...
+
+    @property
+    def commands(self) -> _CommandsProtocol: ...
+
+    @property
+    def files(self) -> _FilesProtocol: ...
 
 
 def _normalize_bytes(content: Any) -> bytes:
