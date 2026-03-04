@@ -1,6 +1,6 @@
 [project]
 name = "langchain-ppio"
-version = "0.0.4"
+version = "0.0.5"
 description = "PPIO sandbox integration for Deep Agents"
 readme = "README.md"
 license = { text = "MIT" }
@@ -20,9 +20,10 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://docs.langchain.com/oss/python/deepagents/sandboxes"
-Repository = "https://github.com/langchain-ai/deepagents"
-Documentation = "https://docs.langchain.com/oss/python/deepagents/sandboxes"
+Homepage = "https://github.com/zson-two/langchain-ppio"
+Repository = "https://github.com/zson-two/langchain-ppio"
+Documentation = "https://github.com/zson-two/langchain-ppio#readme"
+Issues = "https://github.com/zson-two/langchain-ppio/issues"
 
 [project.scripts]
 langchain-ppio-smoke = "langchain_ppio.smoke:main"
